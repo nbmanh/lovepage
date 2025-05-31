@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Gửi Em</title>
+  <style>
+    body {
+      background-color: deeppink;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .text {
+      position: absolute;
+      font-size: 40px;
+      font-weight: bold;
+      color: pink;
+      white-space: nowrap;
+      animation: moveText 5s linear infinite;
+    }
+
+    @keyframes moveText {
+      0% {
+        transform: translateY(100vh);
+        opacity: 0;
+      }
+      20% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-100vh);
+        opacity: 0;
+      }
+    }
+
+    .img-float {
+      position: absolute;
+      width: 150px;  /* Tăng kích thước ảnh */
+      height: 150px; /* Tăng kích thước ảnh */
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+      animation: floatRandom 8s linear infinite;
+    }
+
+    @keyframes floatRandom {
+      0% {
+        transform: translate(0, 0) rotate(0deg);
+      }
+      25% {
+        transform: translate(30vw, -10vh) rotate(90deg);
+      }
+      50% {
+        transform: translate(-20vw, -30vh) rotate(180deg);
+      }
+      75% {
+        transform: translate(25vw, -60vh) rotate(270deg);
+      }
+      100% {
+        transform: translate(-10vw, -100vh) rotate(360deg);
+      }
+    }
+  </style>
+</head>
+<body>
+
+<script>
+  // Dòng chữ "Anh yêu em" chạy lên
+  const messages = [
+  'Anh yêu em 💖',
+  'Nhớ em nhiều lắm 😘',
+  'Bẹp là cute nhất 🥰',
+  'Đi chơi với anh nha 👫',
+  'Yêu bẹp nhất trên đời 💘',
+  'Em là mặt trời của anh 🌞',
+  'Chúc em 1/6 hạnh phúc 😢',
+  'Làm vợ anh nha 💍'
+];
+
+setInterval(() => {
+  const text = document.createElement('div');
+  text.className = 'text';
+  text.innerText = messages[Math.floor(Math.random() * messages.length)];
+  text.style.left = Math.random() * 100 + 'vw';
+  document.body.appendChild(text);
+  setTimeout(() => {
+    text.remove();
+  }, 5000);
+}, 500);
+
+  // Ảnh chạy lung tung
+  const imageUrls = [
+  'imganh1.jpg.jpg',
+  'imganh2.jpg.jpg',
+  'imganh3.jpg.jpg',
+  'imganh4.jpg.jpg',
+  'imganh5.jpg.jpg'
+  ];
+
+  function createFloatingImage() {
+    const img = document.createElement('img');
+    img.className = 'img-float';
+    img.src = imageUrls[Math.floor(Math.random() * imageUrls.length)];
+    img.style.left = Math.random() * 100 + 'vw';
+    img.style.top = Math.random() * 100 + 'vh';
+    document.body.appendChild(img);
+    setTimeout(() => {
+      img.remove();
+    }, 8000);
+  }
+
+  setInterval(createFloatingImage, 700);
+</script>
+
+</body>
+</html>
