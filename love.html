@@ -1,4 +1,4 @@
-!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
@@ -37,28 +37,24 @@
 
     .img-float {
       position: absolute;
-      width: 150px;  /* Tăng kích thước ảnh */
-      height: 150px; /* Tăng kích thước ảnh */
+      width: 150px;
+      height: 150px;
       border-radius: 15px;
       box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
-      animation: floatRandom 8s linear infinite;
+      animation: floatUp 6s linear forwards;
     }
 
-    @keyframes floatRandom {
+    @keyframes floatUp {
       0% {
-        transform: translate(0, 0) rotate(0deg);
+        transform: translateY(100vh);
+        opacity: 0;
       }
-      25% {
-        transform: translate(30vw, -10vh) rotate(90deg);
-      }
-      50% {
-        transform: translate(-20vw, -30vh) rotate(180deg);
-      }
-      75% {
-        transform: translate(25vw, -60vh) rotate(270deg);
+      20% {
+        opacity: 1;
       }
       100% {
-        transform: translate(-10vw, -100vh) rotate(360deg);
+        transform: translateY(-150px);
+        opacity: 0;
       }
     }
   </style>
@@ -66,51 +62,72 @@
 <body>
 
 <script>
-  // Dòng chữ "Anh yêu em" chạy lên
+  // Danh sách dòng chữ
   const messages = [
-  'Anh yêu em 💖',
-  'Nhớ em nhiều lắm 😘',
-  'Bẹp là cute nhất 🥰',
-  'Đi chơi với anh nha 👫',
-  'Yêu bẹp nhất trên đời 💘',
-  'Em là mặt trời của anh 🌞',
-  'Chúc em 1/6 hạnh phúc 😢',
-  'Làm vợ anh nha 💍'
-];
-
-setInterval(() => {
-  const text = document.createElement('div');
-  text.className = 'text';
-  text.innerText = messages[Math.floor(Math.random() * messages.length)];
-  text.style.left = Math.random() * 100 + 'vw';
-  document.body.appendChild(text);
-  setTimeout(() => {
-    text.remove();
-  }, 5000);
-}, 500);
-
-  // Ảnh chạy lung tung
-  const imageUrls = [
-  'imganh1.jpg.jpg',
-  'imganh2.jpg.jpg',
-  'imganh3.jpg.jpg',
-  'imganh4.jpg.jpg',
-  'imganh5.jpg.jpg'
+    'Anh yêu em 💖',
+    'Nhớ em nhiều lắm 😘',
+    'Bẹp là cute nhất 🥰',
+    'Đi chơi với anh nha 👫',
+    'Yêu bẹp nhất trên đời 💘',
+    'Em là mặt trời của anh 🌞',
+    'Chúc em 1/6 hạnh phúc 😢',
+    'Làm vợ anh nha 💍'
   ];
+
+  // Tạo dòng chữ ngẫu nhiên bay lên
+  setInterval(() => {
+    const text = document.createElement('div');
+    text.className = 'text';
+    text.innerText = messages[Math.floor(Math.random() * messages.length)];
+    text.style.left = Math.random() * 100 + 'vw';
+    document.body.appendChild(text);
+    setTimeout(() => {
+      text.remove();
+    }, 5000);
+  }, 500);
+
+  // Danh sách ảnh
+  const imageUrls = [
+    'imganh1.jpg',
+    'imganh2.jpg',
+    'imganh3.jpg',
+    'imganh4.jpg',
+    'imganh5.jpg'
+  ];
+
+  let currentImageIndex = 0;
+
+  // Trộn ngẫu nhiên mảng ảnh (Fisher-Yates Shuffle)
+  function shuffleImages(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+  }
+
+  shuffleImages(imageUrls); // Trộn ngay từ đầu
 
   function createFloatingImage() {
     const img = document.createElement('img');
     img.className = 'img-float';
-    img.src = imageUrls[Math.floor(Math.random() * imageUrls.length)];
-    img.style.left = Math.random() * 100 + 'vw';
-    img.style.top = Math.random() * 100 + 'vh';
+    img.src = imageUrls[currentImageIndex];
+    img.style.left = Math.random() * 90 + 'vw';
+    img.style.bottom = '0px'; // Bắt đầu từ dưới
+
     document.body.appendChild(img);
+
     setTimeout(() => {
       img.remove();
-    }, 8000);
+    }, 6000);
+
+    currentImageIndex++;
+    if (currentImageIndex >= imageUrls.length) {
+      currentImageIndex = 0;
+      shuffleImages(imageUrls);
+    }
   }
 
-  setInterval(createFloatingImage, 700);
+  setInterval(createFloatingImage, 800); // Tạo ảnh mới mỗi 0.8s
 </script>
 
 </body>
